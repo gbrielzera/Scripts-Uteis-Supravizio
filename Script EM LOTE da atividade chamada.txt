@@ -1,0 +1,24 @@
+listaGrid = OrdemServico.GetCustom("PROVISIONAR_SGPS_LISTA")
+
+for linha in listaGrid.Rows:
+    sub = OrdemServico.IniciaSubProcesso(OrdemServico.Atividade)
+    servico = OrdemServico.Servico.Sigla
+    sub.Servico.Sigla = "PROVERTRA"
+    sub.Assunto = "Provisionar - SGPS"
+    
+    sub["DGCO_BB"] = linha["DGCO"]
+    sub["NOME_FORNECEDOR"] = linha["NOME_FORNECEDOR"]
+    sub["NUMERO_NF"] = linha["NUMERO_NF"]
+    sub["VALOR"] = linha["VALOR"]
+    sub["NUMERO_RI"] = linha["NUMERO_RI"]
+    sub["NOME_CONTRATO"] = linha["ORGANIZACAO"]
+    sub["NUM_CONTA"] = linha["NUM_CONTA"]
+    sub["DATA_EFETIVACAO"] = linha["DATA_PAGAMENTO_RI"]
+    sub["VALOR_TOTAL_PROVISAO"] = linha["VALOR_TOTAL_PROVISAO"]
+    sub["ASSUNTO_GUIA"] = linha["MOTIVO"]
+    sub.DescricaoDetalhada = linha["OBSERVACOES"]
+    
+    sub.Salva()
+    sub.AvancaAtividade()
+    
+AvancaProximaAtividade = True
