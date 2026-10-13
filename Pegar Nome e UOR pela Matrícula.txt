@@ -1,0 +1,15 @@
+matricula = Formulario['TE_MATRICULA'].Valor
+
+nome = DB.ExecuteScalar('Select pessoa.NOME From pessoa Inner Join CP_PESSOA On pessoa.ID_PESSOA = CP_PESSOA.ID_PESSOA Where cp_pessoa.matricula = ' + matricula + '')
+
+uor = DB.ExecuteScalar('Select ORGAO.DESCRICAO From PESSOA Inner Join ORGAO On PESSOA.ID_ORGAO = ORGAO.ID_ORGAO Inner Join CP_PESSOA On CP_PESSOA.ID_PESSOA = PESSOA.ID_PESSOA where cp_pessoa.matricula = ' + matricula + '')
+
+#nome2 = Pessoa.Carrega(Convert.ToInt32(nome))
+Formulario.ExibeMensagem(nome)
+Formulario.ExibeMensagem(uor)
+
+Formulario['TEXT'].Valor = nome
+Formulario['TEXT'].Habilitado = False
+
+Formulario['TEXT_1'].Valor = uor
+Formulario['TEXT_1'].Habilitado = False
