@@ -1,0 +1,1 @@
+Formulario['DESCRICAO_DETALHADA'].Valor = OrdemServico.ObtemMotivoGateway("CODIGO_DO_GATEWAY")
