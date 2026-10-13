@@ -1,0 +1,7 @@
+grid = OrdemServico.GetCustom('GRID_IDF')
+
+for i in grid.Rows:
+    nome_fornecedor = str(i["FORNECEDOR"]).strip()
+    break
+    
+#OrdemServico.AdicionaComentario(nome_fornecedor, False)
