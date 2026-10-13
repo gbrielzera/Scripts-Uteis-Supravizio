@@ -1,0 +1,5 @@
+if OrdemServico.PossuiItem("ARQUIVO"):
+    anexo = OrdemServico.ObtemItem("ARQUIVO")
+    Mensagem.Complemento1 = anexo.Descricao.ToString()
+else:
+    Mensagem.Complemento1 = "ANEXO VAZIO"
