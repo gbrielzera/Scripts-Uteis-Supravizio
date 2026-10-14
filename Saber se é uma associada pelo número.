@@ -1,0 +1,4 @@
+numeroOS = OrdemServico.Numero.ToString()
+
+if numeroOS.Contains("."):
+    Criticas.AdicionaPendencia("Teste.")
