@@ -1,0 +1,3 @@
+Criticas.AdicionaPendencia('''A soma dos valores das notas informadas ({0})
+    é diferente do total líquido a faturar ({1})
+    '''.format(valor.ToString(), OrdemServico.GetCustom('CAMPO').ToString()))
