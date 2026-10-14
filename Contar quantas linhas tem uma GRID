@@ -1,0 +1,1 @@
+linhas = OrdemServico.GetCustom('GRID_NF').Rows.Count
