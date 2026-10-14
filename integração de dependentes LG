@@ -1,0 +1,59 @@
+if Formulario['VINCULO_AUX_FUNERAL'].Valor == 'Funcionário(a)':
+    Formulario['MOV_NOME'].Visivel = False
+    Formulario['NOME_BENEFICIARIO'].Visivel = True
+    Formulario['VINCULO_AUX_FUNERAL_BENEFICIARIO'].Visivel = True
+    Formulario['CSC_BANCO2'].Visivel = True
+    Formulario['CSC_NUMERO_AGENCIA'].Visivel = True
+    Formulario['CSC_CONTA_CORRENTE'].Visivel = True
+ 
+if Formulario['VINCULO_AUX_FUNERAL'].Valor != 'Funcionário(a)':
+    Formulario['MOV_NOME'].Visivel = True
+    Formulario['MOV_NOME'].Habilitado = True
+    Formulario['NOME_BENEFICIARIO'].Visivel = False
+    Formulario['VINCULO_AUX_FUNERAL_BENEFICIARIO'].Visivel = False
+    Formulario['CSC_BANCO2'].Visivel = False
+    Formulario['CSC_NUMERO_AGENCIA'].Visivel = False
+    Formulario['CSC_CONTA_CORRENTE'].Visivel = False
+ 
+    # --- consulta à LG, acrescentada agora ---
+    MATRICULA_TESTE = '105475'
+    vinculo = Formulario['VINCULO_AUX_FUNERAL'].Valor
+ 
+    if MATRICULA_TESTE != '':
+        matricula = MATRICULA_TESTE
+    else:
+        cliente_id = Convert.ToInt32(OrdemServico.ClienteId).ToString()
+        matricula = Convert.ToString(
+            DB.ExecuteScalar("SELECT MATRICULA FROM CP_PESSOA WHERE ID_PESSOA = " + cliente_id)
+        ).Trim()
+ 
+    filtro = ''
+    if vinculo == 'Pai':
+        filtro = "TIPO_RELACIONAMENTO = 'PA->PAIS DEP IR' AND SEXO = 'M->Masc'"
+    elif vinculo == 'Mãe':
+        filtro = "TIPO_RELACIONAMENTO = 'PA->PAIS DEP IR' AND SEXO = 'F->Feminino'"
+    elif vinculo == 'Conjuge':
+        filtro = "TIPO_RELACIONAMENTO IN ('SP->Cônjuge','IL->Par Cônjug')"
+    elif vinculo == 'Filho(a)':
+        filtro = "TIPO_RELACIONAMENTO = 'CH->FILHO(A)'"
+ 
+    if filtro != '' and matricula != None and matricula != '':
+        sql = "SELECT NOME FROM xxbbtsgate.BBTS_PSF_FUNCIONARIO_DEP_VW WHERE EMPLID = '" + matricula + "' AND " + filtro + " ORDER BY DATA_NASCIMENTO"
+        dados = DB.ExecuteDataTable(sql)
+ 
+        nomes = []
+        for linha in dados.Rows:
+            nomes.append(linha['NOME'].ToString())
+ 
+        if len(nomes) == 1:
+            Formulario['MOV_NOME'].Itens = nomes
+            Formulario['MOV_NOME'].Valor = nomes[0]
+            Formulario['MOV_NOME'].Habilitado = False
+        elif len(nomes) > 1:
+            Formulario['MOV_NOME'].Itens = nomes
+            Formulario['MOV_NOME'].Valor = ''
+            Formulario['MOV_NOME'].Habilitado = True
+        else:
+            Formulario['MOV_NOME'].Itens = []
+            Formulario['MOV_NOME'].Valor = ''
+            Formulario['MOV_NOME'].Habilitado = False
