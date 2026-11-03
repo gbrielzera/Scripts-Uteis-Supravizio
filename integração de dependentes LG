@@ -16,7 +16,7 @@ if Formulario['VINCULO_AUX_FUNERAL'].Valor != 'Funcionário(a)':
     Formulario['CSC_CONTA_CORRENTE'].Visivel = False
  
     # --- consulta à LG, acrescentada agora ---
-    MATRICULA_TESTE = '105475'
+    MATRICULA_TESTE = '######'
     vinculo = Formulario['VINCULO_AUX_FUNERAL'].Valor
  
     if MATRICULA_TESTE != '':
